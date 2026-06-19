@@ -11,9 +11,10 @@ dist-ssr/
 .env.*.local
 backend/.env
 
-# ChromaDB (generado por ingest.py)
+# Generados por ingest.py (no subir al repo)
 chroma_db/
 backend/chroma_db/
+backend/portfolio.db
 
 # Python
 __pycache__/

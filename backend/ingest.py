@@ -69,15 +69,19 @@ def build_vectorstore(chunks: list[Document]) -> None:
 def main():
     print("\n=== Indexando Portfolio ===")
 
-    print("\n[1/3] Cargando archivos...")
+    print("\n[1/4] Cargando archivos...")
     docs = load_documents()
     print(f"  Documentos encontrados: {len(docs)}")
 
-    print("\n[2/3] Dividiendo en chunks...")
+    print("\n[2/4] Dividiendo en chunks...")
     chunks = split_documents(docs)
 
-    print("\n[3/3] Generando embeddings y guardando en ChromaDB...")
+    print("\n[3/4] Generando embeddings y guardando en ChromaDB...")
     build_vectorstore(chunks)
+
+    print("\n[4/4] Poblando SQLite con datos estructurados...")
+    from app.db.seed import seed as seed_db
+    seed_db()
 
     print("\nIndexación completada. Ahora puedes ejecutar: uvicorn main:app --reload\n")
 

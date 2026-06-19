@@ -89,6 +89,13 @@ Repositorio: https://github.com/Alvarorrodri/restaurante-bot-n8n
 
 Agente conversacional que gestiona reservas de mesa de forma natural a través de Telegram.
 
+TerraLog
+
+Tecnologías: Flutter, Dart, Supabase
+Repositorio: https://github.com/Alvarorrodri/TerraLog
+
+Aplicación móvil para el registro y seguimiento de procesos de compostaje. Permite documentar cada lote con fotos, mediciones ambientales y observaciones, almacenando todo en la nube con sincronización en tiempo real. Autenticación con Supabase Auth y almacenamiento de imágenes en Supabase Storage.
+
 
 Experiencia
 

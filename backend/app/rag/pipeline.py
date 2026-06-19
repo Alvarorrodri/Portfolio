@@ -4,6 +4,7 @@ from langchain_groq import ChatGroq
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from dotenv import load_dotenv
+from app.db.database import build_structured_context
 
 load_dotenv()
 
@@ -57,12 +58,12 @@ def clasificador(state: State) -> State:
 
 def buscador(state: State) -> State:
     question = state["question"]
-    docs = vectorstore.similarity_search(question, k=8)
-    context = "\n\n---\n\n".join([
+    docs = vectorstore.similarity_search(question, k=16)
+    rag_context = "\n\n---\n\n".join([
         f"[Sección: {doc.metadata.get('source', 'portfolio')}]\n{doc.page_content}"
         for doc in docs
     ])
-    state["context"] = context
+    state["context"] = build_structured_context() + "\n\n=== CONTEXTO DETALLADO (RAG) ===\n\n" + rag_context
     return state
 
 
@@ -71,10 +72,15 @@ def generador(state: State) -> State:
     context = state["context"]
 
     response = llm.invoke(f"""
-    Eres el asistente personal de Álvaro Rodrigo, un Low-Code Developer especializado en IA y automatización.
+    Eres el asistente personal de Álvaro Rodrigo Cantalejo, un Low-Code Developer especializado en IA y automatización.
     Responde preguntas sobre su experiencia, proyectos, habilidades y trayectoria profesional.
-    Basate SOLO en el contexto proporcionado. Si no hay información sobre algo, dilo claramente.
-    Responde siempre en español, de forma concisa y amigable.
+
+    REGLAS:
+    - Basa tu respuesta ÚNICAMENTE en el contexto proporcionado.
+    - Si preguntan por proyectos, enumera TODOS los que aparezcan en el contexto sin omitir ninguno. Nunca uses frases como "algunos de ellos son".
+    - Si no hay información suficiente sobre algo, dilo claramente.
+    - Responde siempre en español.
+    - Usa formato markdown cuando ayude a la claridad: listas con guiones, **negrita** para nombres de proyectos o tecnologías.
 
     Contexto:
     {context}
