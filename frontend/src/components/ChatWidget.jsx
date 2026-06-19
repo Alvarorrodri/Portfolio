@@ -101,7 +101,9 @@ export default function ChatWidget() {
                   className={msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}
                   style={{ fontSize: '0.8rem' }}
                 >
-                  {msg.content}
+                  {msg.role === 'user'
+                    ? msg.content
+                    : <ReactMarkdown>{msg.content}</ReactMarkdown>}
                 </div>
               ))}
               {loading && <TypingIndicator />}
