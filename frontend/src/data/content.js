@@ -1,5 +1,5 @@
 export const personalInfo = {
-  name: 'Álvaro Rodrigo',
+  name: 'Álvaro Rodrigo Cantalejo',
   title: 'Low-Code Developer & AI Automation',
   tagline: 'Junior dev con base Low-Code real\ny especialización autodidacta en IA generativa.',
   bio: 'Desarrollador Low-Code especializado en OutSystems, con experiencia real en proyecto empresarial, y especialización autodidacta en automatización inteligente con IA: LangChain, RAG, LangGraph, n8n y Python.',
@@ -111,7 +111,7 @@ export const experience = [
       'Gestión de roles: empleado, gestor y aprobador',
     ],
     tech: ['OutSystems', 'SQL'],
-    current: true,
+    current: false,
   },
 ]
 

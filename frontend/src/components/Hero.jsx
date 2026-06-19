@@ -123,28 +123,20 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-bold leading-tight mb-6"
-          style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', color: '#F8FAFC' }}
+          className="font-bold leading-tight mb-6 whitespace-nowrap"
+          style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3.5rem)', color: '#F8FAFC' }}
         >
-          {personalInfo.name.split(' ').map((word, i) => (
-            <span key={i}>
-              {i === 1 ? (
-                <span
-                  style={{
-                    background: 'linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  {word}
-                </span>
-              ) : (
-                word
-              )}
-              {i < personalInfo.name.split(' ').length - 1 ? ' ' : ''}
-            </span>
-          ))}
+          {personalInfo.name.split(' ')[0]}{' '}
+          <span
+            style={{
+              background: 'linear-gradient(135deg, #7C3AED 0%, #3B82F6 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            {personalInfo.name.split(' ').slice(1).join(' ')}
+          </span>
         </motion.h1>
 
         <motion.p

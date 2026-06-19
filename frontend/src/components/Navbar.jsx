@@ -67,10 +67,10 @@ export default function Navbar() {
             className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white"
             style={{ background: 'linear-gradient(135deg, #7C3AED, #3B82F6)' }}
           >
-            AR
+            ARC
           </div>
           <span className="text-sm font-medium text-white/70 group-hover:text-white transition-colors">
-            álvaro rodrigo
+            Álvaro Rodrigo Cantalejo
           </span>
         </a>
 
