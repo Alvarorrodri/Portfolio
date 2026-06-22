@@ -1,0 +1,37 @@
+{
+    admin off
+}
+
+:80 {
+    root * /usr/share/caddy
+    encode zstd gzip
+
+    # Proxy al backend para las llamadas de la API
+    handle /chat* {
+        reverse_proxy backend:8000
+    }
+    handle /health* {
+        reverse_proxy backend:8000
+    }
+
+    # SPA: rutas desconocidas sirven index.html
+    handle {
+        try_files {path} /index.html
+        file_server
+    }
+
+    # Headers de seguridad
+    header {
+        X-Content-Type-Options  nosniff
+        X-Frame-Options         DENY
+        Referrer-Policy         strict-origin-when-cross-origin
+        -Server
+    }
+}
+
+# Para producción con HTTPS automático (Let's Encrypt):
+# Sustituye ":80" por tu dominio, añade puertos 80 y 443 en docker-compose.prod.yml
+# y monta un volumen para caddy_data. Caddy gestiona el certificado solo.
+# tudominio.com {
+#     ...mismo contenido...
+# }
