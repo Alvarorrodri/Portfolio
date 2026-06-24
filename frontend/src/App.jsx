@@ -1,3 +1,4 @@
+import { ChatProvider } from './context/ChatContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -12,20 +13,22 @@ import Contact from './components/Contact'
 
 export default function App() {
   return (
-    <div style={{ background: '#0A0A1A', minHeight: '100vh' }}>
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Experience />
-        <Education />
-        <Certifications />
-        <ChatSection />
-        <Contact />
-      </main>
-      <ChatWidget />
-    </div>
+    <ChatProvider>
+      <div style={{ background: '#0A0A1A', minHeight: '100vh' }}>
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Projects />
+          <Skills />
+          <Experience />
+          <Education />
+          <Certifications />
+          <ChatSection />
+          <Contact />
+        </main>
+        <ChatWidget />
+      </div>
+    </ChatProvider>
   )
 }
