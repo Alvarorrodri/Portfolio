@@ -15,18 +15,24 @@ jobs:
           echo 'deb [signed-by=/usr/share/keyrings/cloudflare-public-v2.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
           sudo apt-get update && sudo apt-get install -y cloudflared
 
-      - name: Deploy via SSH over Cloudflare Tunnel
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          proxy_host: ${{ secrets.SSH_HOST }}
-          proxy_username: ${{ secrets.SSH_USER }}
-          proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh_args: -o ProxyCommand='cloudflared access ssh --hostname %h'
-          script: |
-            cd ~/proyectos/Portfolio
-            git pull
-            docker compose -f docker-compose.prod.yml up -d --build
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          cat >> ~/.ssh/config << EOF
+          Host ssh.alvarorodrigo.dev
+            ProxyCommand cloudflared access ssh --hostname %h
+            StrictHostKeyChecking no
+            User alvaro
+            IdentityFile ~/.ssh/id_ed25519
+          EOF
+
+      - name: Deploy
+        run: |
+          ssh alvaro@ssh.alvarorodrigo.dev "
+            cd ~/proyectos/Portfolio &&
+            git pull &&
+            docker compose -f docker-compose.prod.yml up -d --build &&
             docker image prune -f
+          "
