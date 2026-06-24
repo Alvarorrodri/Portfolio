@@ -22,10 +22,11 @@ function TypingIndicator() {
 
 export default function ChatSection() {
   const { messages, input, setInput, sendMessage, loading, messagesLeft, limitReached } = useChat()
-  const bottomRef = useRef(null)
+  const messagesContainerRef = useRef(null)
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const el = messagesContainerRef.current
+    if (el) el.scrollTop = el.scrollHeight
   }, [messages, loading])
 
   const handleSubmit = (e) => {
@@ -166,7 +167,7 @@ export default function ChatSection() {
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-3" style={{ maxHeight: '340px' }}>
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-5 flex flex-col gap-3" style={{ maxHeight: '340px' }}>
               {messages.map((msg, i) => (
                 <div
                   key={i}
@@ -178,7 +179,6 @@ export default function ChatSection() {
                 </div>
               ))}
               {loading && <TypingIndicator />}
-              <div ref={bottomRef} />
             </div>
 
             <form
