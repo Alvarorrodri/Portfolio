@@ -5,21 +5,29 @@ services:
       dockerfile: Dockerfile
     volumes:
       - chroma_data:/app/chroma_db
+      - sqlite_data:/app/portfolio.db
     env_file:
       - ./backend/.env
     restart: unless-stopped
+    networks:
+      - caddy_network
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ""   # vacío = URLs relativas, nginx hace el proxy
-    ports:
-      - "80:80"
+        VITE_API_URL: ""
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - caddy_network
 
 volumes:
   chroma_data:
+  sqlite_data:
+
+networks:
+  caddy_network:
+    external: true
