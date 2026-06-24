@@ -177,14 +177,6 @@ export default function ChatWidget() {
           '🤖'
         )}
 
-        {!open && messages.length === 1 && (
-          <span
-            className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-xs flex items-center justify-center font-bold"
-            style={{ background: '#EF4444', color: 'white', fontSize: '0.6rem' }}
-          >
-            IA
-          </span>
-        )}
       </motion.button>
     </div>
   )
