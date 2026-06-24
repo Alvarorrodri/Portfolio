@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - chroma_data:/app/chroma_db
-      - sqlite_data:/app/portfolio.db
+      - sqlite_data:/app/data
     env_file:
       - ./backend/.env
     restart: unless-stopped
